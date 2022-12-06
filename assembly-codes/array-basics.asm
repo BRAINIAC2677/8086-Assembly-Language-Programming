@@ -1,0 +1,44 @@
+.MODEL SMALL
+
+.STACK 100H
+
+.DATA
+    ARR1 DW 01234H, 05678H, 09ABCH
+    ARR2 DB 2 DUP (01EH), 2 DUP (0ABH), 0FFH
+    
+.CODE
+
+MAIN PROC
+    
+    ; LOADING DATA 
+    MOV AX, @DATA
+    MOV DS, AX 
+    
+    ; ARRAY ACCESSING 
+    LEA SI, ARR1
+    MOV AX, [SI]
+    MOV AX, [SI+2]
+    MOV AX, [SI]+4
+    MOV AX, [0+SI]
+    MOV AX, 2+[SI]
+    
+    MOV SI, 4
+    MOV AX, ARR1[SI]
+    MOV AX, ARR1[2]
+    
+    ; CHANING ARRAY VALUES
+    MOV ARR1[0], 0EFABH
+    MOV SI, 2
+    MOV [SI], 011EEH
+    MOV [SI], 0F0H   
+         
+    ; USE OF POINTERS
+    MOV WORD PTR [SI], 0F0H
+           
+    ; EXIT TO DOS
+    MOV AH, 4CH
+    INT 21H
+    
+MAIN ENDP
+
+END MAIN
